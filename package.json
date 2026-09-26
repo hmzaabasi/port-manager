@@ -1,0 +1,51 @@
+{
+  "name": "port-manager",
+  "version": "1.0.0",
+  "private": true,
+  "description": "See which apps are listening on this PC and stop them.",
+  "author": "Port Manager",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "electron": "^38.2.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.portmanager.app",
+    "productName": "Port Manager",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "src/list-ports.ps1",
+        "to": "scripts/list-ports.ps1"
+      },
+      {
+        "from": "src/list-commands.ps1",
+        "to": "scripts/list-commands.ps1"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowElevation": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Port Manager",
+      "artifactName": "PortManager-Setup-${version}.exe",
+      "runAfterFinish": true
+    }
+  }
+}

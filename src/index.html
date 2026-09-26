@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Port Manager</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="top">
+        <div class="title-block">
+          <p class="eyebrow"><span class="live-dot" id="live-dot" hidden></span> This PC</p>
+          <h1>Port Manager</h1>
+          <p class="subtitle">Apps listening on TCP ports. Stop the one you are done with.</p>
+        </div>
+        <div class="stats" id="stats" aria-live="polite"></div>
+      </header>
+
+      <div class="toolbar">
+        <label class="search">
+          <span class="sr-only">Filter listeners</span>
+          <input id="search" type="search" placeholder="Filter by port, app, or command" autocomplete="off" spellcheck="false" />
+        </label>
+        <label class="check"><input id="loopback-only" type="checkbox" /> Loopback only</label>
+        <label class="check"><input id="show-system" type="checkbox" /> Windows listeners</label>
+        <label class="check"><input id="live" type="checkbox" checked /> Live</label>
+        <button id="refresh" type="button">Refresh</button>
+      </div>
+
+      <div class="columns" aria-hidden="true">
+        <span>Port</span>
+        <span>Application</span>
+        <span>Bind</span>
+        <span>PID</span>
+        <span></span>
+      </div>
+
+      <main id="list" class="list" aria-live="polite"></main>
+      <footer id="status" class="status"></footer>
+    </div>
+
+    <dialog id="confirm">
+      <form method="dialog">
+        <h2 id="confirm-title">Stop this process?</h2>
+        <p id="confirm-body"></p>
+        <p id="confirm-warning" class="warning" hidden></p>
+        <div class="dialog-actions">
+          <button id="confirm-cancel" value="cancel" type="submit">Cancel</button>
+          <button id="confirm-stop" value="stop" class="stop solid" type="submit">Stop process</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>
